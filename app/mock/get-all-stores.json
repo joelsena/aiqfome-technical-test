@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "logo_url": "/mocks/matsuri_logo.png",
+        "name": "Matsuri Concept",
+        "rating": 4.7,
+        "shipping_cost": "R$0,00",
+        "open": true
+    },
+    {
+        "id": 2,
+        "logo_url": "/mocks/subway_logo.png",
+        "name": "Subway - Avenida center",
+        "rating": 4.7,
+        "shipping_cost": "R$6,00",
+        "open": true
+    },
+    {
+        "id": 3,
+        "logo_url": "/mocks/bk_logo.png",
+        "name": "Burger King - Colombo",
+        "rating": 4.7,
+        "shipping_cost": "R$0,00",
+        "open": true
+    },
+    {
+        "id": 4,
+        "logo_url": "/mocks/mc_logo.png",
+        "name": "McDonald’s - Novo Centro",
+        "rating": 4.7,
+        "shipping_cost": "R$6,00",
+        "open": true
+    },
+    {
+        "id": 5,
+        "logo_url": "/mocks/mc_logo.png",
+        "name": "McDonald’s - Novo Centro",
+        "rating": 4.7,
+        "shipping_cost": "R$6,00",
+        "open": false
+    },
+    {
+        "id": 6,
+        "logo_url": "/mocks/bk_logo.png",
+        "name": "Burger King - Colombo",
+        "rating": 4.7,
+        "shipping_cost": "R$6,00",
+        "open": false
+    },
+    {
+        "id": 7,
+        "logo_url": "/mocks/subway_logo.png",
+        "name": "Subway - Avenida center",
+        "rating": 4.7,
+        "shipping_cost": "R$6,00",
+        "open": false
+    }
+]

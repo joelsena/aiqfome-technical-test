@@ -27,7 +27,7 @@ export default function RootLayout({
         <Header />
 
         {/* HEADER_HEIGHT => 76px */}
-        <main className="pt-[76px]">{children}</main>
+        <main className="pt-[76px] min-h-dvh">{children}</main>
 
         <Footer />
       </body>
