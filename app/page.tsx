@@ -36,7 +36,7 @@ export default function Home() {
 
       <div>
         <Image
-          className="mt-px"
+          className="mt-px sm:hidden"
           src="/discount-banner.png"
           alt="Banner de promoção"
           width={390}

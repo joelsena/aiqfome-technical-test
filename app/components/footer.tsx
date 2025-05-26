@@ -1,4 +1,7 @@
+"use client";
+
 import { useTicketCtx } from "@/context/ticket-context";
+import { Button } from "./button";
 
 export function Footer() {
   const { products } = useTicketCtx();
@@ -8,7 +11,7 @@ export function Footer() {
       <p>feito com 💜 em maringá-PR</p>
 
       {products.length > 0 ? (
-        <button type="button">Ver Ticket</button>
+        <Button>Ver Ticket</Button>
       ) : (
         <p>aiqfome.com © 2007-2025 aiqfome LTDA. CNPJ: 09.186.786/0001-58</p>
       )}
