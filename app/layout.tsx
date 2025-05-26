@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 
+import { TicketCtxProvider } from "./context/ticket-context";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -13,7 +14,7 @@ const nunito = Nunito({
 
 export const metadata: Metadata = {
   title: "Aiqfome - App de delivery",
-  description: "Peça seu delivery no melhor app da sua cidade e região",
+  description: "Peça seu delivery no melhor app da sua cidade e região.",
 };
 
 export default function RootLayout({
@@ -24,12 +25,14 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${nunito.variable} antialiased`}>
-        <Header />
+        <TicketCtxProvider>
+          <Header />
 
-        {/* HEADER_HEIGHT => 76px */}
-        <main className="pt-[76px] min-h-dvh">{children}</main>
+          {/* HEADER_HEIGHT => 76px */}
+          <main className="pt-[76px] min-h-dvh">{children}</main>
 
-        <Footer />
+          <Footer />
+        </TicketCtxProvider>
       </body>
     </html>
   );
