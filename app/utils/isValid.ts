@@ -9,6 +9,8 @@ export function isValid<T>(input: T): input is NonNullable<NonEmptyObject<NonEmp
   // tratamento para objeto
   if (typeof input === "object" && input !== null) return !Object.keys(input).length;
 
+  console.log({ input });
+
   // default fallback
-  return !input;
+  return !!input;
 }

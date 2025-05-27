@@ -1,37 +1,27 @@
 "use client";
 
 import { createContext, type ReactNode, use, useEffect, useState } from "react";
-import { randomUUID } from "node:crypto";
 import { isValid } from "@/utils/isValid";
+import { randomID } from "@/utils/randomID";
 
 export type subProduct = {
   name: string;
-  price: number;
-  onSalePrice?: number;
+  basePrice: number;
+  price?: number;
   quantity?: number;
 };
 
 export interface ITicketProduct {
   id: string;
+  productId: string;
   quantity: number;
   price: number;
-  sideDishes: subProduct[];
-  size: subProduct;
+  addons: subProduct[];
 
+  variant?: subProduct;
   comment?: string;
   cutlery?: subProduct;
   drinks?: subProduct[];
-  extra?: subProduct[];
-}
-
-export interface IProduct {
-  id: string;
-  name: string;
-  description: string;
-  sizes: subProduct[];
-  sideDishes: string[];
-  drinks?: subProduct[];
-  cutlery?: subProduct[];
   extra?: subProduct[];
 }
 
@@ -61,7 +51,7 @@ export function TicketCtxProvider({
         ...state,
         {
           ...product,
-          id: randomUUID(),
+          id: `ticket-product-${randomID(3)}`,
           price: handledProductPrice,
         },
       ];
@@ -125,30 +115,34 @@ export function TicketCtxProvider({
 
   function _getProductPrice({
     quantity: multiplier,
-    size,
-    sideDishes,
+    variant,
+    addons,
     cutlery,
     drinks,
     extra,
   }: Omit<ITicketProduct, "id" | "price">) {
-    const sizePrice = size.onSalePrice ? size.onSalePrice : size.price;
-    const sideDishesPrice = sideDishes.reduce((prev, dish) => prev + dish.price, 0);
+    const addonsPrice = addons.reduce((prev, addon) => prev + addon.basePrice, 0);
 
+    let variantPrice = 0;
     let cutleryPrice = 0;
     let drinksPrice = 0;
     let extraPrice = 0;
 
-    if (isValid(cutlery)) {
-      cutleryPrice = cutlery.price;
-    }
-    if (isValid(drinks)) {
-      drinksPrice = drinks.reduce((prev, drink) => prev + drink.price, 0);
-    }
-    if (isValid(extra)) {
-      extraPrice = extra.reduce((prev, extra) => prev + extra.price, 0);
+    if (isValid(variant)) {
+      variantPrice = variant.price ? variant.price : variant.basePrice;
     }
 
-    return multiplier * (sizePrice + sideDishesPrice + cutleryPrice + drinksPrice + extraPrice);
+    if (isValid(cutlery)) {
+      cutleryPrice = cutlery.basePrice;
+    }
+    if (isValid(drinks)) {
+      drinksPrice = drinks.reduce((prev, drink) => prev + drink.basePrice, 0);
+    }
+    if (isValid(extra)) {
+      extraPrice = extra.reduce((prev, extra) => prev + extra.basePrice, 0);
+    }
+
+    return multiplier * (variantPrice + addonsPrice + cutleryPrice + drinksPrice + extraPrice);
   }
 
   function _getSubtotal(products: ITicketProduct[]) {

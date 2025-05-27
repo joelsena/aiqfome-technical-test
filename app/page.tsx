@@ -8,10 +8,10 @@ import { twMerge } from "tailwind-merge";
 
 type Store = {
   id: number;
-  logo_url: string;
+  logo: string;
   name: string;
   rating: number;
-  shipping_cost: string;
+  deliveryFee: number;
   open: boolean;
 };
 
@@ -48,16 +48,16 @@ export default function Home() {
           <h5 className="text-purple-500 font-extrabold">Abertos</h5>
           {openedStores.map((store) => (
             <Link
-              href={`/store-catalog/${store.id}`}
+              href={`/store/${store.id}/catalog`}
               className={twMerge("flex bg-neutral-50 rounded-lg overflow-hidden", !store.open && "opacity-50")}
               key={store.id}
             >
-              <Image className="object-contain" width={72} height={72} src={store.logo_url} alt="Logo da lanchonete" />
+              <Image className="object-contain" width={72} height={72} src={store.logo} alt="Logo da lanchonete" />
 
               <div className="p-3">
                 <p className="font-bold text-neutral-700">{store.name}</p>
                 <div className="flex items-center gap-2">
-                  {store.shipping_cost === "R$0,00" ? (
+                  {store.deliveryFee === 0 ? (
                     <span className="flex items-center gap-1 text-teal-600">
                       <Image width={18} height={13} src="/icons/delivery-icon.svg" alt="ícone de delivery" />
                       <p className="text-sm font-bold leading-none">grátis</p>
@@ -65,7 +65,7 @@ export default function Home() {
                   ) : (
                     <span className="flex items-center gap-1 text-purple-500">
                       <Image width={18} height={18} src="/icons/aiqentrega-icon.svg" alt="ícone de delivery" />
-                      <p className="text-sm font-bold leading-none">{store.shipping_cost}</p>
+                      <p className="text-sm font-bold leading-none">{`R$ ${store.deliveryFee}`}</p>
                     </span>
                   )}
 
@@ -85,19 +85,19 @@ export default function Home() {
           <h5 className="text-purple-500 font-extrabold">Fechados</h5>
           {closedStores.map((store) => (
             <Link
-              href="/store-catalog"
+              href={`/store/${store.id}/catalog`}
               className={twMerge(
                 "flex bg-neutral-50 rounded-lg overflow-hidden",
                 !store.open && "opacity-50 pointer-events-none"
               )}
               key={store.id}
             >
-              <Image className="object-contain" width={72} height={72} src={store.logo_url} alt="Logo da lanchonete" />
+              <Image className="object-contain" width={72} height={72} src={store.logo} alt="Logo da lanchonete" />
 
               <div className="p-3">
                 <p className="font-bold text-neutral-700">{store.name}</p>
                 <div className="flex items-center gap-2">
-                  {store.shipping_cost === "R$0,00" ? (
+                  {store.deliveryFee === 0 ? (
                     <span className="flex items-center gap-1 text-teal-600">
                       <Image width={18} height={18} src="/icons/delivery-icon.svg" alt="ícone de delivery" />
                       <p className="text-sm font-bold leading-none">grátis</p>
@@ -105,7 +105,7 @@ export default function Home() {
                   ) : (
                     <span className="flex items-center gap-1 text-purple-500">
                       <Image width={18} height={18} src="/icons/aiqentrega-icon.svg" alt="ícone de delivery" />
-                      <p className="text-sm font-bold leading-none">{store.shipping_cost}</p>
+                      <p className="text-sm font-bold leading-none">{`R$ ${store.deliveryFee}`}</p>
                     </span>
                   )}
 

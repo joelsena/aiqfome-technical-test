@@ -7,7 +7,8 @@
     "deliveryOptions": {
       "deliveryFee": 4.99,
       "minimumOrder": 15.00,
-      "estimatedDeliveryTime": "30-40 min"
+      "estimatedDeliveryTime": "30-40 min",
+      "distance": "5.2 km"
     },
     "rating": 4.7,
     "categories": [
@@ -23,7 +24,7 @@
             "name": "Ceviches",
             "description": "Um prato super refrescante de peixe fatiado e marinado com limão.",
             "type": "main",
-            "items": []
+            "items": ["product_005"]
         },
         {
             "id": "cat_3",
@@ -44,7 +45,7 @@
             "name": "Sobremesas",
             "type": "addons",
             "description": "",
-            "items": [] 
+            "items": ["addon_006","addon_007","addon_008"] 
         }
     ],
     "products": [
@@ -53,7 +54,8 @@
             "name": "Califórnia",
             "description": "Kani, pepino e maçã ou manga",
             "image": "/products/temaki_california.jpg",
-            "basePrice": 13.99,
+            "basePrice": 17,
+            "price": 13.99,
             "isVegetarian": true,
             "isSpicy": false,
             "variants": [
@@ -113,8 +115,9 @@
             "id": "product_005",
             "name": "Ceviche de salmão",
             "description": "salmão temperado com limão, cebola e pimenta",
-            "image": "/products/temaki_salmao_picante.jpg",
-            "basePrice": 19.90,
+            "image": "/products/ceviche_salmao.png",
+            "basePrice": 22.90,
+            "price": 19.90,
             "isVegetarian": false,
             "isSpicy": true,
             "variants": [
@@ -173,6 +176,31 @@
             "id": "addon_005",
             "name": "água sem gás",
             "basePrice": 3
+        },
+        {
+            "id": "addon_006",
+            "name": "biscoito da sorte",
+            "basePrice": 2
+        },
+        {
+            "id": "addon_007",
+            "name": "rolinho primavera",
+            "basePrice": 8
+        },
+        {
+            "id": "addon_008",
+            "name": "guioza",
+            "basePrice": 6
+        },
+        {
+            "id": "addon_009",
+            "name": "hashi",
+            "basePrice": 0
+        },
+        {
+            "id": "addon_010",
+            "name": "guioza",
+            "basePrice": 1
         }
     ]
   }

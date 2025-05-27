@@ -1,0 +1,93 @@
+{
+    "product": {
+        "id": "product_005",
+        "name": "Ceviche de salmão",
+        "description": "salmão temperado com limão, cebola e pimenta",
+        "image": "/products/ceviche_salmao.png",
+        "basePrice": 22.90,
+        "price": 19.90,
+        "isVegetarian": false,
+        "isSpicy": true,
+        "variants": [
+            {
+                "name": "médio",
+                "basePrice": 22.90,
+                "price": 19.90
+            },
+            {
+                "name": "grande",
+                "basePrice": 28.90
+            }
+        ],
+        "addons": [
+            {
+                "name": "shoyu",
+                "basePrice": 0
+            },
+            {
+                "name": "gengibre",
+                "basePrice": 0
+            },
+            {
+                "name": "wasabi",
+                "basePrice": 0
+            },
+            {
+                "name": "sem acompanhamentos",
+                "basePrice": 0
+            }
+        ]
+    },
+    "globalAddons": [
+        {
+            "id": "addon_001",
+            "name": "coca-cola",
+            "basePrice": 5
+        },
+        {
+            "id": "addon_002",
+            "name": "fanta laranja",
+            "basePrice": 5
+        },
+        {
+            "id": "addon_003",
+            "name": "guaraná antarctica",
+            "basePrice": 5
+        },
+        {
+            "id": "addon_004",
+            "name": "suco prats laranja",
+            "basePrice": 6
+        },
+        {
+            "id": "addon_005",
+            "name": "água sem gás",
+            "basePrice": 3
+        },
+        {
+            "id": "addon_006",
+            "name": "biscoito da sorte",
+            "basePrice": 2
+        },
+        {
+            "id": "addon_007",
+            "name": "rolinho primavera",
+            "basePrice": 8
+        },
+        {
+            "id": "addon_008",
+            "name": "guioza",
+            "basePrice": 6
+        },
+        {
+            "id": "addon_009",
+            "name": "hashi",
+            "basePrice": 0
+        },
+        {
+            "id": "addon_010",
+            "name": "guioza",
+            "basePrice": 1
+        }
+    ]
+}
