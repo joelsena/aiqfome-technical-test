@@ -4,12 +4,10 @@ type NonEmptyArray<T> = T extends any[] ? (T["length"] extends 0 ? never : T) : 
 
 export function isValid<T>(input: T): input is NonNullable<NonEmptyObject<NonEmptyArray<T>>> {
   // tratamento para array
-  if (Array.isArray(input)) return !input.length;
+  if (Array.isArray(input)) return !!input.length;
 
   // tratamento para objeto
-  if (typeof input === "object" && input !== null) return !Object.keys(input).length;
-
-  console.log({ input });
+  if (typeof input === "object" && input !== null) return !!Object.keys(input).length;
 
   // default fallback
   return !!input;

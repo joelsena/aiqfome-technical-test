@@ -38,6 +38,31 @@
             }
         ]
     },
+    "categories": [
+        {
+            "id": "cat_10",
+            "name": "bebidas",
+            "description": "",
+            "type": "quantos_quiser",
+            "items": ["addon_001","addon_002","addon_003","addon_004","addon_005"]
+        },
+        {
+            "id": "cat_11",
+            "name": "talheres",
+            "description": "",
+            "type": "definido",
+            "limit": 1,
+            "items": ["addon_009","addon_010"]
+        },
+        {
+            "id": "cat_12",
+            "name": "extra",
+            "description": "",
+            "type": "definido",
+            "limit": 2,
+            "items": ["addon_006","addon_007","addon_008"]
+        }
+    ],
     "globalAddons": [
         {
             "id": "addon_001",
@@ -86,8 +111,13 @@
         },
         {
             "id": "addon_010",
-            "name": "guioza",
+            "name": "garfo e faca descartável",
             "basePrice": 1
         }
-    ]
+    ],
+    "store": {
+        "id": "STORE_1",
+        "name": "Matsuri Concept",
+        "logo": "/mocks/matsuri_logo.png"
+    }
 }

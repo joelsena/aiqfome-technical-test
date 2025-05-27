@@ -11,9 +11,17 @@ export type subProduct = {
   quantity?: number;
 };
 
+export interface ITicketStore {
+  id: string;
+  logo: string;
+  name: string;
+  ticketProducts: string[];
+}
+
 export interface ITicketProduct {
   id: string;
   productId: string;
+  productName: string;
   quantity: number;
   price: number;
   addons: subProduct[];
@@ -28,7 +36,11 @@ export interface ITicketProduct {
 type TicketContextType = {
   products: ITicketProduct[];
   subtotal: number;
-  addProduct: (product: Omit<ITicketProduct, "id" | "price">) => void;
+  stores: ITicketStore[];
+  addProduct: (
+    product: Omit<ITicketProduct, "id" | "price">,
+    store: Omit<ITicketStore, "ticketProducts">
+  ) => ITicketProduct;
   updateProduct: (productId: string, payload: Partial<ITicketProduct>) => void;
   removeProduct: (productId: string) => void;
 };
@@ -41,42 +53,80 @@ export function TicketCtxProvider({
   children: ReactNode;
 }>) {
   const [products, setProducts] = useState<ITicketProduct[]>([]);
+  const [stores, setStores] = useState<ITicketStore[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
 
-  function addProduct(product: Omit<ITicketProduct, "id" | "price">) {
+  function addProduct(product: Omit<ITicketProduct, "id" | "price">, store: Omit<ITicketStore, "ticketProducts">) {
     const handledProductPrice = _getProductPrice(product);
 
+    const newProduct = {
+      ...product,
+      id: `ticket-product-${randomID(3)}`,
+      price: handledProductPrice,
+    };
+
     setProducts((state) => {
-      const newProducts = [
-        ...state,
-        {
-          ...product,
-          id: `ticket-product-${randomID(3)}`,
-          price: handledProductPrice,
-        },
-      ];
+      const newProducts = [...state, newProduct];
 
       const newSubtotal = _getSubtotal(newProducts);
 
       setSubtotal(newSubtotal);
 
+      const hasStore = !!stores.find((stateStore) => stateStore.id === store.id);
+      let newStores: ITicketStore[];
+
+      if (hasStore) {
+        newStores = stores.map((stateStore) => ({
+          ...stateStore,
+          ticketProducts:
+            store.id === stateStore.id ? [...stateStore.ticketProducts, newProduct.id] : stateStore.ticketProducts,
+        }));
+      } else {
+        newStores = [
+          ...stores,
+          {
+            ...store,
+            ticketProducts: [newProduct.id],
+          },
+        ];
+      }
+
+      setStores(newStores);
+
       // sync with storage
-      _setInStorage({ products: newProducts, subtotal: newSubtotal });
+      _setInStorage({ products: newProducts, subtotal: newSubtotal, stores: newStores });
 
       return newProducts;
     });
+
+    return newProduct;
   }
 
   function removeProduct(productId: string) {
-    setProducts((state) => {
-      const filteredProducts = state.filter((product) => product.id !== productId);
+    setProducts((stateProducts) => {
+      const filteredProducts = stateProducts.filter((product) => product.id !== productId);
 
       const newSubtotal = _getSubtotal(filteredProducts);
 
       setSubtotal(newSubtotal);
 
+      const chosenStore = stores.find((store) => store.ticketProducts.includes(productId));
+      let updatedStores: ITicketStore[];
+
+      if (chosenStore && chosenStore.ticketProducts.length === 1) {
+        // remove do stores
+        updatedStores = stores.filter((store) => store.id !== chosenStore.id);
+      } else {
+        updatedStores = stores.map((store) => ({
+          ...store,
+          ticketProducts: store.ticketProducts.filter((ticketProduct) => ticketProduct !== productId),
+        }));
+      }
+
+      setStores(updatedStores);
+
       // sync with storage
-      _setInStorage({ products: filteredProducts, subtotal: newSubtotal });
+      _setInStorage({ products: filteredProducts, subtotal: newSubtotal, stores: updatedStores });
 
       return filteredProducts;
     });
@@ -107,7 +157,7 @@ export function TicketCtxProvider({
       setSubtotal(updatedSubtotal);
 
       // sync with storage
-      _setInStorage({ products: updatedProducts, subtotal: updatedSubtotal });
+      _setInStorage({ products: updatedProducts, subtotal: updatedSubtotal, stores });
 
       return updatedProducts;
     });
@@ -135,21 +185,22 @@ export function TicketCtxProvider({
     if (isValid(cutlery)) {
       cutleryPrice = cutlery.basePrice;
     }
+
     if (isValid(drinks)) {
-      drinksPrice = drinks.reduce((prev, drink) => prev + drink.basePrice, 0);
+      drinksPrice = drinks.reduce((prev, drink) => prev + drink.basePrice * (drink.quantity ?? 1), 0);
     }
     if (isValid(extra)) {
       extraPrice = extra.reduce((prev, extra) => prev + extra.basePrice, 0);
     }
 
-    return multiplier * (variantPrice + addonsPrice + cutleryPrice + drinksPrice + extraPrice);
+    return multiplier * variantPrice + addonsPrice + cutleryPrice + drinksPrice + extraPrice;
   }
 
   function _getSubtotal(products: ITicketProduct[]) {
     return products.reduce((prev, product) => prev + product.price, 0);
   }
 
-  function _setInStorage(payload: { products: ITicketProduct[]; subtotal: number }) {
+  function _setInStorage(payload: { products: ITicketProduct[]; subtotal: number; stores: ITicketStore[] }) {
     localStorage.setItem("aiqfome-ticket", JSON.stringify(payload));
   }
 
@@ -157,15 +208,19 @@ export function TicketCtxProvider({
     const storageTicket = localStorage.getItem("aiqfome-ticket");
 
     if (storageTicket) {
-      const { products, subtotal }: { products: ITicketProduct[]; subtotal: number } = JSON.parse(storageTicket);
+      const { products, subtotal, stores }: { products: ITicketProduct[]; subtotal: number; stores: ITicketStore[] } =
+        JSON.parse(storageTicket);
 
       setProducts(products);
       setSubtotal(subtotal);
+      setStores(stores);
     }
   }, []);
 
   return (
-    <TicketContext value={{ products, addProduct, removeProduct, updateProduct, subtotal }}>{children}</TicketContext>
+    <TicketContext value={{ products, addProduct, removeProduct, updateProduct, subtotal, stores }}>
+      {children}
+    </TicketContext>
   );
 }
 

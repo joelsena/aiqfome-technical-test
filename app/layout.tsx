@@ -29,7 +29,7 @@ export default function RootLayout({
           <Header />
 
           {/* HEADER_HEIGHT => 76px */}
-          <main className="pt-[76px] min-h-dvh">{children}</main>
+          <main className="pt-[76px] min-h-dvh max-w-[630px] mx-auto">{children}</main>
 
           <Footer />
         </TicketCtxProvider>

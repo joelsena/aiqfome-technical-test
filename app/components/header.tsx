@@ -4,7 +4,7 @@ import { MapPin, ChevronRight, UserRound } from "lucide-react";
 
 export function Header() {
   return (
-    <header className="fixed top-0 right-0 left-0 flex items-center justify-between gap-6 bg-purple-500 p-4 text-white">
+    <header className="fixed z-50 top-0 right-0 left-0 flex items-center justify-between gap-6 bg-purple-500 p-4 text-white">
       <Image src="/aiqfome-brand.svg" alt="Aiqfome Logo" width={32} height={32} priority />
 
       <div className="flex items-center gap-4">

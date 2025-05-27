@@ -60,7 +60,7 @@ export function CategoryDisclosure({ className, defaultOpen = false, title, desc
                       R$ {item.basePrice.toFixed(2)}
                     </small>
                     <span className="flex items-center gap-1 text-sm font-bold text-green-500">
-                      <CircleDollarSign className="size-[14px]" />
+                      <CircleDollarSign className="size-[14px]" strokeWidth={1.5} />
                       <p>R$ {item.price.toFixed(2)}</p>
                     </span>
                   </div>
